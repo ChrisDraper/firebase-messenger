@@ -1,3 +1,62 @@
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    
 
+    <title>Firebase Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      body {
+        background-color:#333;
+        color:#fff;
+        font-family: Tahoma, Verdana, Sans-Serif;
+        font-size:1.5rem;
+
+      }
+
+      input {
+          padding:5px;
+          font-size:1rem;
+      }
+
+      #messagesDiv {
+
+      }
+
+      #messagesDiv div {
+        display:none;
+      }
+
+      #messagesDiv div:last-child {
+        color:#f90;
+      }
+
+    </style>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  </head>
+  <body>
+    <input type='text' id='nameInput' placeholder='Name'>
+    <input type='text' id='messageInput' placeholder='Message'>
+    <div id='messagesDiv'><em>Latest messages...</em></div>
+    <script>
+      var myDataRef = new Firebase('https://intense-heat-6542.firebaseio.com/');
+      $('#messageInput').keypress(function (e) {
+        if (e.keyCode == 13) {
+          var name = $('#nameInput').val();
+          var text = $('#messageInput').val();
+          myDataRef.push({name: name, text: text});
+          $('#messageInput').val('');
+        }
+      });
+      myDataRef.on('child_added', function(snapshot) {
+        var message = snapshot.val();
+        displayChatMessage(message.name, message.text);
+      });
+      function displayChatMessage(name, text) {
+        $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv')).fadeIn();
+        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+      };
+    </script>
+  </body>
 </html>
