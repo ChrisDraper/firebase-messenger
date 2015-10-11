@@ -1,0 +1,24 @@
+﻿   body {
+        background-color:#333;
+        color:#fff;
+        font-family: Tahoma, Verdana, Sans-Serif;
+        font-size:1.5rem;
+
+      }
+
+      input {
+          padding:5px;
+          font-size:1rem;
+      }
+
+      #messagesDiv {
+
+      }
+
+      #messagesDiv div {
+        display:none;
+      }
+
+      #messagesDiv div:last-child {
+        color:#f90;
+      }
